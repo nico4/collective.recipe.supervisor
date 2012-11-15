@@ -130,7 +130,7 @@ eventlisteners
     documentation about events is at 
     http://supervisord.org/manual/current/events.html ::
     
-        processname events command [[args]]
+        processname [(process_opts)] events command [[args]]
     
     ``events`` is a comma-separated list (without spaces) of event type names 
     that the listener is interested in receiving notifications for.
@@ -143,6 +143,13 @@ eventlisteners
     every 60 seconds and restarts as needed could look like::
     
        MemoryMonitor TICK_60 ${buildout:bin-directory}/memmon [-p process_name=200MB]
+
+    As eventlisteners are a special case of processes, the also accept process
+    options. One useful option is to start an eventlistener like the HttpOk
+    checker only after your webserver has had time to start and load, say
+    say after 20 seconds:
+    
+    MemoryMonitor (startsecs=20) TICK_60 ${buildout:bin-directory}/memmon [-p process_name=200MB]
     
 groups
    A list of programs that become part of a group. One per line.
@@ -166,6 +173,7 @@ We'll start by creating a buildout that uses the recipe::
     ... [buildout]
     ... parts = supervisor
     ... index = http://pypi.python.org/simple
+    ... versions = versions
     ... [zeo]
     ... location = /a/b/c
     ... [instance1]
@@ -191,10 +199,14 @@ We'll start by creating a buildout that uses the recipe::
     ...       70 other3 (startsecs=10) ${buildout:bin-directory}/other3 [-n -h -v --no-detach] /tmp3 true www-data
     ... eventlisteners =
     ...       Memmon TICK_60 ${buildout:bin-directory}/memmon [-p instance1=200MB]
-    ...       HttpOk TICK_60 ${buildout:bin-directory}/httpok [-p site1 -t 20 http://localhost:8080/]
+    ...       HttpOk (startsecs=20) TICK_60 ${buildout:bin-directory}/httpok [-p site1 -t 20 http://localhost:8080/]
     ... groups =
     ...       10 services zeo,instance1
     ...       20 others other,other2,other3
+    ... 
+    ... [versions]
+    ... superlance = 0.6
+    ... supervisor = 3.0b1
     ... """)
 
 Chris McDonough said::
@@ -222,6 +234,9 @@ Check that we have the ``crashmail``, ``memmon`` and ``httpok`` scripts from sup
     >>> ls(sample_buildout, 'bin')
     -  buildout
     -  crashmail
+    -  crashmailbatch
+    -  crashsms
+    -  fatalmailbatch
     -  httpok
     -  memmon
     -  supervisorctl
@@ -337,6 +352,7 @@ Now, have a look at the generated ``supervisord.conf`` file::
     events = TICK_60
     process_name=HttpOk
     environment=SUPERVISOR_USERNAME='mustapha',SUPERVISOR_PASSWORD='secret',SUPERVISOR_SERVER_URL='http://supervisor.mustap.com'
+    startsecs = 20
     <BLANKLINE>
     [group:services]
     programs = zeo,instance1
@@ -351,7 +367,7 @@ and if we look at generated supervisord script we will see that the
 configuration file is given as argument with the ``-c`` option::
 
     >>> cat('bin', 'supervisord')
-    ...
+    #!...
     <BLANKLINE>
     ...
     <BLANKLINE>
@@ -360,13 +376,13 @@ configuration file is given as argument with the ``-c`` option::
     import supervisor.supervisord
     <BLANKLINE>
     if __name__ == '__main__':
-        supervisor.supervisord.main()
+        sys.exit(supervisor.supervisord.main())
 
 The control script contains all specified options, like server url and 
 username. This allows to run it as is::
 
     >>> cat('bin', 'supervisorctl')
-    ...
+    #!...
     <BLANKLINE>
     ...
     <BLANKLINE>
@@ -375,19 +391,19 @@ username. This allows to run it as is::
     import supervisor.supervisorctl
     <BLANKLINE>
     if __name__ == '__main__':
-        supervisor.supervisorctl.main(sys.argv[1:])
+        sys.exit(supervisor.supervisorctl.main(sys.argv[1:]))
 
 Memmon delegates all work to the egg's ``memmon`` Python script itself::
 
     >>> cat('bin', 'memmon')
-    ...
+    #!...
     <BLANKLINE>
     ...
     <BLANKLINE>
     import superlance.memmon
     <BLANKLINE>
     if __name__ == '__main__':
-        superlance.memmon.main()
+        sys.exit(superlance.memmon.main())
 
 The ``log`` directory is created by the recipe::
 
@@ -402,12 +418,17 @@ script will automatically try to connect to the specified port::
     ... [buildout]
     ... parts = supervisor
     ... index = http://pypi.python.org/simple/
+    ... versions = versions
     ...
     ... [supervisor]
     ... recipe = collective.recipe.supervisor
     ... port = 9005
     ... programs =
     ...       50 other ${buildout:bin-directory}/other [-n 100] /tmp
+    ...
+    ... [versions]
+    ... superlance = 0.6
+    ... supervisor = 3.0b1
     ... """)
 
 Here we specified that the supervisor will be launched on port 9005. We can see
@@ -415,7 +436,7 @@ that this is also set in the control script::
 
     >>> _ = system(buildout)
     >>> cat('bin', 'supervisorctl')
-    ...
+    #!...
     <BLANKLINE>
     ...
     <BLANKLINE>
@@ -424,7 +445,7 @@ that this is also set in the control script::
     import supervisor.supervisorctl
     <BLANKLINE>
     if __name__ == '__main__':
-        supervisor.supervisorctl.main(sys.argv[1:])
+        sys.exit(supervisor.supervisorctl.main(sys.argv[1:]))
 
 It is possible to run the HTTP server on a `unix socket
 <http://supervisord.org/configuration.html#unix-http-server-section-values>`_ rather than TCP/IP::
@@ -434,6 +455,7 @@ It is possible to run the HTTP server on a `unix socket
     ... [buildout]
     ... parts = supervisor
     ... index = http://pypi.python.org/simple/
+    ... versions = versions
     ...
     ... [supervisor]
     ... recipe = collective.recipe.supervisor
@@ -443,6 +465,10 @@ It is possible to run the HTTP server on a `unix socket
     ... file = /tmp/supervisor.sock
     ... programs =
     ...       50 other ${buildout:bin-directory}/other [-n 100] /tmp
+    ...
+    ... [versions]
+    ... superlane = 0.6
+    ... supervisor = 3.0b1
     ... """)
     >>> _ = system(buildout)
     >>> cat('parts', 'supervisor', 'supervisord.conf') #doctest: +REPORT_NDIFF
