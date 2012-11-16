@@ -1,4 +1,4 @@
-0.18 (Unknown)
+0.18 (2012-11-16)
 =================
 
 - Add travis-ci support
