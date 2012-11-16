@@ -207,6 +207,8 @@ We'll start by creating a buildout that uses the recipe::
     ... [versions]
     ... superlance = 0.6
     ... supervisor = 3.0b1
+    ... meld3 = 0.6.9
+    ... zc.recipe.egg = 1.3.2
     ... """)
 
 Chris McDonough said::
@@ -222,12 +224,12 @@ Chris McDonough said::
 Running the buildout gives us::
 
     >>> print system(buildout)
-    Getting distribution for 'zc.recipe.egg'.
+    Getting distribution for....
     ...
     Installing supervisor.
     ...
     Generated script '/sample-buildout/bin/supervisorctl'.
-    <BLANKLINE>
+    ...
 
 Check that we have the ``crashmail``, ``memmon`` and ``httpok`` scripts from superlance::
 
@@ -429,6 +431,8 @@ script will automatically try to connect to the specified port::
     ... [versions]
     ... superlance = 0.6
     ... supervisor = 3.0b1
+    ... meld3 = 0.6.9
+    ... zc.recipe.egg = 1.3.2
     ... """)
 
 Here we specified that the supervisor will be launched on port 9005. We can see
@@ -467,8 +471,10 @@ It is possible to run the HTTP server on a `unix socket
     ...       50 other ${buildout:bin-directory}/other [-n 100] /tmp
     ...
     ... [versions]
-    ... superlane = 0.6
+    ... superlance = 0.6
     ... supervisor = 3.0b1
+    ... meld3 = 0.6.9
+    ... zc.recipe.egg = 1.3.2
     ... """)
     >>> _ = system(buildout)
     >>> cat('parts', 'supervisor', 'supervisord.conf') #doctest: +REPORT_NDIFF
