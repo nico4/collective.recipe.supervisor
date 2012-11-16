@@ -1,6 +1,9 @@
 0.18 (Unknown)
 =================
 
+- Add travis-ci support
+  [fredvd]
+
 - Add process options to eventlisteners so you can for example delay them. 
   [fredvd]
 
