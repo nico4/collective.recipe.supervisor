@@ -128,7 +128,7 @@ eventlisteners
     A list of eventlisteners you'd like supervisord to run as subprocesses to
     subscribe to event notifications. One per line. Relevant supervisor 
     documentation about events is at 
-    http://supervisord.org/manual/current/events.html ::
+    http://supervisord.org/events.html ::
     
         processname [(process_opts)] events command [[args]]
     
@@ -219,7 +219,7 @@ Chris McDonough said::
      that "stop" and "start" tend to not do what you want. It's far better to 
      use "runzope", which actually execs the Python process which becomes Zope
      See also 
-     http://supervisord.org/manual/current/subprocesses.html#nondaemonizing_of_subprocesses
+     http://supervisord.org/subprocess.html#nondaemonizing_of_subprocesses
 
 Running the buildout gives us::
 
