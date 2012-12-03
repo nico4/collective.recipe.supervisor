@@ -1,3 +1,3 @@
 .. contents::
 
-- Code repository: https://svn.plone.org/svn/collective/buildout/collective.recipe.supervisor
+- Code repository: https://github.com/collective/collective.recipe.supervisor/
