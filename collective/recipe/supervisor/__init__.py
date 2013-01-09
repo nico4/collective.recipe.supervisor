@@ -12,6 +12,13 @@ class Recipe(object):
     def __init__(self, buildout, name, options):
         self.buildout, self.name, self.options = buildout, name, options
 
+        if self.options.get('supervisord-conf') is None:
+            self.options['supervisord-conf'] = os.path.join(
+                self.buildout['buildout']['parts-directory'],
+                self.name,
+                'supervisord.conf',
+                )
+
     def install(self):
         """Installer"""
         # XXX Implement recipe functionality here
@@ -210,10 +217,8 @@ class Recipe(object):
                            dict(stringfiles=stringfiles,
                                 )
 
-        conf_file = os.path.join(self.buildout['buildout']['parts-directory'],
-                                 self.name, 'supervisord.conf')
-        if self.options.get('supervisord-conf', None) is not None:
-            conf_file = self.options.get('supervisord-conf')
+        conf_file = self.options.get('supervisord-conf')
+
         if not os.path.exists(os.path.dirname(conf_file)):
             os.makedirs(os.path.dirname(conf_file))
 
