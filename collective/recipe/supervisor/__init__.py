@@ -277,7 +277,7 @@ class Recipe(object):
 
     def update(self):
         """Updater"""
-        pass
+        return self._install_scripts()
 
 
 CONFIG_TEMPLATE = """
