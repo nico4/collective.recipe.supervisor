@@ -224,6 +224,11 @@ class Recipe(object):
 
         open(conf_file, 'w').write(config_data)
 
+        return self._install_scripts()
+
+    def _install_scripts(self):
+        conf_file = self.options.get('supervisord-conf')
+
         init_stmt = 'import sys; sys.argv.extend(["-c","%s"])' % \
             (conf_file,)
         dscript = zc.recipe.egg.Egg(
