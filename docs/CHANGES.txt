@@ -1,4 +1,4 @@
-0.19 (unreleased)
+0.19 (2013-01-09)
 =================
 
 - Fix the dissapearance of dependencies from the picked eggs after the
