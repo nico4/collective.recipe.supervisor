@@ -5,6 +5,9 @@
   first run of buildout.
   [afrepues]
 
+- Fix e-mail address in project history file, somehow it was wrong, oh
+  well.
+  [afrepues]
 
 0.18 (2012-11-16)
 =================
@@ -43,12 +46,12 @@
 =================
 
  - Added support for the umask option of supervisord
-   [servilio@mcmaster.ca]
+   [afrepues@mcmaster.ca]
 
  - Move the credentials needed for authenticating with the supervisord
    process from the supervisorctl script to the configuration
    file. Because of bug 180705 of zc.buildout, scripts are made
-   world-readable. [servilio@mcmaster.ca]
+   world-readable. [afrepues@mcmaster.ca]
 
 0.13 (2010-12-07)
 =================
