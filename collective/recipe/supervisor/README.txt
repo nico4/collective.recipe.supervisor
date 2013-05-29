@@ -147,9 +147,9 @@ eventlisteners
     As eventlisteners are a special case of processes, the also accept process
     options. One useful option is to start an eventlistener like the HttpOk
     checker only after your webserver has had time to start and load, say
-    say after 20 seconds:
+    after 20 seconds:
     
-    MemoryMonitor (startsecs=20) TICK_60 ${buildout:bin-directory}/memmon [-p process_name=200MB]
+       HttpOk (startsecs=20) TICK_60 ${buildout:bin-directory}/httpok [-p web -t 20 http://localhost:8080/]
     
 groups
    A list of programs that become part of a group. One per line.
@@ -199,7 +199,7 @@ We'll start by creating a buildout that uses the recipe::
     ...       70 other3 (startsecs=10) ${buildout:bin-directory}/other3 [-n -h -v --no-detach] /tmp3 true www-data
     ... eventlisteners =
     ...       Memmon TICK_60 ${buildout:bin-directory}/memmon [-p instance1=200MB]
-    ...       HttpOk (startsecs=20) TICK_60 ${buildout:bin-directory}/httpok [-p site1 -t 20 http://localhost:8080/]
+    ...       HttpOk (startsecs=20) TICK_60 ${buildout:bin-directory}/httpok [-p instance1 -t 20 http://localhost:8080/]
     ... groups =
     ...       10 services zeo,instance1
     ...       20 others other,other2,other3
