@@ -268,7 +268,8 @@ class Recipe(object):
         if not os.path.exists(os.path.dirname(conf_file)):
             os.makedirs(os.path.dirname(conf_file))
 
-        open(conf_file, 'w').write(config_data)
+        with open(conf_file, 'w') as cf:
+            cf.write(config_data)
 
         return self._install_scripts()
 
@@ -327,5 +328,3 @@ class Recipe(object):
     def update(self):
         """Updater"""
         return self._install_scripts()
-
-
