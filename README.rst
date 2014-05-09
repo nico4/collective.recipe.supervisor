@@ -211,10 +211,18 @@ Example
           10 services zeo,instance1
           20 others other,other2,other3
 
+Upgrading
+=========
+
+If upgrading from v0.19 to 0.20 the ``sections`` parameter got two new
+sections ``global`` and ``services``. If ``sections`` parameter was set in old
+buildout config: in order to get the same behavior as before append the two
+new section names to value of ``sections``.
+
 Source Code
 ===========
 
 The sources are in a GIT DVCS with its main branches at
 `github <http://github.com/collective/collective.recipe.supervisor>`_.
 
-We'd be happy to see many forks and pull-requests to make it even better.
+We'd be happy to see many contributions to make it even better.

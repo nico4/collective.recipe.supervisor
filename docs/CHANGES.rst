@@ -4,6 +4,14 @@ Change history
 0.20 (unreleased)
 =================
 
+- Feature: exclude global configuration so the generated file can be used
+  to be included by a system wide supervisord.
+  [jensens]
+
+- Cleanup/overhaul/pep8 of code base, include self contained buildout with
+  testrunner
+  [jensens]
+
 0.19 (2013-01-09)
 =================
 
@@ -84,12 +92,15 @@ Change history
 
 0.10.1 (2010-07-27)
 ===================
+
 - Updated documentation about how to use the memmon event listener [lucielejard]
 
 0.10 (2010-06-03)
 =================
+
  - Added an option for the environment variable PATH
    [lucielejard]
+
  - Added support for disabling supervisor sections (such as http, rpc and ctl) [Domen Kozar]
 
 
