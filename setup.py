@@ -11,10 +11,10 @@ import os
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '0.21dev'
+version = '0.20.dev0'
 
 long_description = (
-    read('docs', 'README.rst') + '\n\n' +
+    read('README.rst') + '\n\n' +
     read('docs', 'CHANGES.rst') + '\n\n' +
     read('docs', 'CONTRIBUTORS.rst')
 )

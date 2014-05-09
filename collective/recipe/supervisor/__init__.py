@@ -279,7 +279,7 @@ class Recipe(object):
         init_stmt = 'import sys; sys.argv.extend(["-c","{0}"])'.format(
             conf_file
         )
-        if 'daemon' in self._sections:
+        if 'global' in self._sections:
             dscript = zc.recipe.egg.Egg(
                 self.buildout,
                 self.name,
