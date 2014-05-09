@@ -22,7 +22,7 @@ long_description = (
 entry_point = 'collective.recipe.supervisor:Recipe'
 entry_points = {"zc.buildout": ["default = %s" % entry_point]}
 
-tests_require = ['zope.testing']
+tests_require = ['zc.buildout[test]']
 
 setup(name='collective.recipe.supervisor',
       version=version,
@@ -51,7 +51,7 @@ setup(name='collective.recipe.supervisor',
                         # -*- Extra requirements: -*-
                         ],
       tests_require=tests_require,
-      extras_require=dict(tests=tests_require),
+      extras_require=dict(test=tests_require),
       test_suite='collective.recipe.supervisor.tests.test_docs.test_suite',
       entry_points=entry_points,
       )

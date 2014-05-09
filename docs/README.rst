@@ -21,8 +21,7 @@ The recipe supports the following options:
 
 sections
     List of enabled supervisor sections.
-    Defaults to ``global http ctl rpc services``.
-
+    Defaults to enable all: ``global http ctl rpc services``.
 
 plugins
     Extra eggs you want the recipe to install, e.g. ``superlance``
