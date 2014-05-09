@@ -2,7 +2,15 @@
 install supervisord and generate its configuration
 **************************************************
 
+|buildstatus|_
+
 .. contents::
+
+- Code repository: https://github.com/collective/collective.recipe.supervisor/
+
+
+.. |buildstatus| image:: https://api.travis-ci.org/collective/collective.recipe.supervisor.png?branch=master
+.. _buildstatus: https://travis-ci.org/collective/collective.recipe.supervisor
 
 Detailed Documentation
 **********************
@@ -214,15 +222,12 @@ Example
 Upgrading
 =========
 
-If upgrading from v0.19 to 0.20 the ``sections`` parameter got two new
-sections ``global`` and ``services``. If ``sections`` parameter was set in old
-buildout config: in order to get the same behavior as before append the two
-new section names to value of ``sections``.
+If upgrading from v0.19 to 0.20 the ``sections`` parameter got two new sections ``global`` and ``services``.
+If ``sections`` parameter was set in old buildout config: in order to get the same behavior as before append the two new section names to value of ``sections``.
 
 Source Code
 ===========
 
-The sources are in a GIT DVCS with its main branches at
-`github <http://github.com/collective/collective.recipe.supervisor>`_.
+The sources are in a GIT DVCS with its main branches at `github collective <http://github.com/collective/collective.recipe.supervisor>`_.
 
 We'd be happy to see many contributions to make it even better.
